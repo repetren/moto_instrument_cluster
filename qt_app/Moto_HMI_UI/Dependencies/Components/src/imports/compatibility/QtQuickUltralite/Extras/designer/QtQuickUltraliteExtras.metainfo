@@ -1,0 +1,28 @@
+MetaInfo {
+    Type {
+        name: "QtQuickUltralite.Extras.ColorizedImage"
+        icon: "images/image-icon.png"
+
+        ItemLibraryEntry {
+            name: "Colorized Image"
+            category: "QtQuickUltralite - Extras"
+            libraryIcon: "images/image-icon@2x.png"
+            version: "1.9"
+            requiredImport: "QtQuickUltralite.Extras"
+            Property { name: "source"; type: "binding"; value: "\"source/text\""; }
+        }
+    }
+    Type {
+        name: "QtQuickUltralite.Extras.StaticText"
+        icon: "images/text-icon.png"
+
+        ItemLibraryEntry {
+            name: "Static Text"
+            category: "QtQuickUltralite - Extras"
+            libraryIcon: "images/text-icon@2x.png"
+            version: "1.9"
+            requiredImport: "QtQuickUltralite.Extras"
+            Property { name: "text"; type: "binding"; value: "qsTr(\"Static Text\")"; }
+        }
+    }
+}
