@@ -21,7 +21,7 @@ Rectangle {
         id: text1
         x: 354
         y: 124
-        text: qsTr("v002")
+        text: qsTr("v003")
         font.pixelSize: 400
     }
     states: [
