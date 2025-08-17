@@ -80,3 +80,5 @@ CMakeLists.txt.user*
 .rcc/
 .uic/
 /build*/
+qt_app/Moto_HMI_UIApp-Debug/
+

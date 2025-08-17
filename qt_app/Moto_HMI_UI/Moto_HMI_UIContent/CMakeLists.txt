@@ -11,6 +11,21 @@ qt6_add_qml_module(Moto_HMI_UIContent
     QML_FILES
         "Screen01.ui.qml"
         "App.qml"
+        "screenComponents/FuelLevel.ui.qml"
+    RESOURCES
+        "images/backRPM_v001.svg"
+        "images/fuelIcon_allert_v001.svg"
+        "images/fuelBG_v001.svg"
+        "images/fuelIcon_v001.svg"
+        "lottie/fuelLineAnim_v001.json"
 )
 
+
+qt6_add_resources(Moto_HMI_UIContent Moto_HMI_UIContentBigResource
+    BIG_RESOURCES
+    PREFIX "/qt/qml/Moto_HMI_UIContent"
+    VERSION 1.0
+    FILES 
+        "fonts/SF-Pro.ttf"
+)
 

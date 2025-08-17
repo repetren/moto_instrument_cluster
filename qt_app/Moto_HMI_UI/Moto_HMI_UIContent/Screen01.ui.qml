@@ -9,21 +9,25 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 import QtQuick
 import QtQuick.Controls
 import Moto_HMI_UI
+import "screenComponents"
 
 Rectangle {
-    id: rectangle
+    id: rootRectangle
     width: Constants.width
     height: Constants.height
+    color: "#000000"
 
-    color: Constants.backgroundColor
-
-    Text {
-        id: text1
-        x: 354
-        y: 124
-        text: qsTr("v003")
-        font.pixelSize: 400
+    Image {
+        id: backRPM_v001
+        visible: true
+        anchors.fill: parent
+        source: "images/backRPM_v001.svg"
     }
+
+    FuelLevel {
+        id: fuelLevel
+    }
+
     states: [
         State {
             name: "clicked"

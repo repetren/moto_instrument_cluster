@@ -1,0 +1,192 @@
+import QtQuick
+import Moto_HMI_UI
+import Qt.labs.lottieqt 1.0
+import QtQuick.Controls 6.8
+import QtQuick.Studio.Components
+import QtQuick.Timeline 1.0
+
+Rectangle {
+    id: rectangle
+    width: Constants.width
+    height: Constants.height
+    color: "#000000"
+
+    // state: fuelBackend.lowLevel ? "lowFuelAllert" : "Base State"
+    Image {
+        id: fuelBG_v001
+        anchors.fill: parent
+        source: "../images/fuelBG_v001.svg"
+        fillMode: Image.PreserveAspectFit
+    }
+    LottieAnimation {
+        id: fuelLevelAnimation
+        autoPlay: true
+        x: 58
+        y: 133
+        width: 187
+        height: 428
+        source: "../lottie/fuelLineAnim_v001.json"
+        loops: -1
+
+        Connections {
+            target: fuelBackend
+            onFuelLevelChanged: {
+                fuelLevelAnimation.gotoAndStop(fuelBackend.fuelLevel)
+            }
+        }
+
+        Text {
+            id: literPerKm
+            x: -35
+            y: -33
+            color: "#ffffff"
+            text: fuelBackend.litersPerKm + " L"
+            font.pixelSize: 30
+            font.styleName: "Bold"
+            font.family: "SF Pro"
+        }
+
+        Text {
+            id: kmTitle
+            x: -35
+            y: 0
+            color: "#ffffff"
+            text: qsTr("per 100km")
+            font.pixelSize: 30
+            font.styleName: "Light"
+            font.family: "SF Pro"
+        }
+
+        Text {
+            id: literPerKm1
+            x: -35
+            y: 58
+            color: "#ffffff"
+            text: fuelBackend.fuelRange + " km"
+            font.pixelSize: 30
+            font.styleName: "Bold"
+            font.family: "SF Pro"
+        }
+
+        Text {
+            id: kmTitle1
+            x: -35
+            y: 91
+            color: "#ffffff"
+            text: qsTr("Range")
+            font.pixelSize: 30
+            font.styleName: "Light"
+            font.family: "SF Pro"
+        }
+    }
+
+    Image {
+        id: fuelIcon_v001
+        x: 24
+        y: 301
+        source: "../images/fuelIcon_v001.svg"
+        fillMode: Image.PreserveAspectFit
+    }
+
+    Connections {
+        id: connections
+        target: fuelBackend
+
+        onLowLevelChanged: {
+
+            if (fuelBackend.lowLevel) {
+                rectangle.state = "lowFuelAllert"
+            } else {
+                rectangle.state = "Base State"
+            }
+        }
+    }
+
+    Timeline {
+        id: lowFuelAnimation
+        animations: [
+            TimelineAnimation {
+                id: timelineAnimation
+                onFinished: {
+                    rectangle.state = "lowFuelAllert"
+                }
+                running: false
+                loops: -1
+                duration: 1000
+                to: 1000
+                from: 0
+            }
+        ]
+        startFrame: 0
+        endFrame: 1000
+        enabled: false
+
+        KeyframeGroup {
+            target: fuelIcon_v001
+            property: "opacity"
+            Keyframe {
+                value: 1
+                frame: 0
+            }
+
+            Keyframe {
+                value: 0.2
+                frame: 500
+            }
+
+            Keyframe {
+                value: 1
+                frame: 1000
+            }
+        }
+    }
+
+    states: [
+        State {
+            name: "lowFuelAllert"
+
+            PropertyChanges {
+                target: fuelIcon_v001
+                opacity: 1
+                source: "../images/fuelIcon_allert_v001.svg"
+            }
+
+            PropertyChanges {
+                target: lowFuelAnimation
+                enabled: true
+            }
+
+            PropertyChanges {
+                target: timelineAnimation
+                running: true
+            }
+        }
+    ]
+    transitions: [
+        Transition {
+            id: transition
+            ParallelAnimation {
+                SequentialAnimation {
+                    PauseAnimation {
+                        duration: 0
+                    }
+
+                    PropertyAnimation {
+                        target: fuelIcon_v001
+                        property: "opacity"
+                        duration: 150
+                    }
+                }
+            }
+            to: "*"
+            from: "*"
+        }
+    ]
+}
+
+/*##^##
+Designer {
+    D{i:0}D{i:20;transitionDuration:2000}
+}
+##^##*/
+
