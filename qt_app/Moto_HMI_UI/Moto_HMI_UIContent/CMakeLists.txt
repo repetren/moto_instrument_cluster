@@ -9,15 +9,25 @@ qt6_add_qml_module(Moto_HMI_UIContent
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
-        "Screen01.ui.qml"
         "App.qml"
+        "Screen01.ui.qml"
         "screenComponents/FuelLevel.ui.qml"
+        "screenComponents/Turn.ui.qml"
+        "screenComponents/LightsIcons.ui.qml"
     RESOURCES
-        "images/backRPM_v001.svg"
-        "images/fuelIcon_allert_v001.svg"
-        "images/fuelBG_v001.svg"
-        "images/fuelIcon_v001.svg"
         "lottie/fuelLineAnim_v001.json"
+        "lottie/turnAnimFrame.json"
+        "lottie/turnAnimIcon.json"
+        "lottie/drlicon.json"
+        "images/fuelIcon_v001.svg"
+        "images/fuelIcon_allert_v001.svg"
+        "images/turnLamp_v001.svg"
+        "images/cornerRaduis_v003.png"
+        "images/fuelBG_v001.svg"
+        "images/backRPM_v001.svg"
+        "images/highBeam.svg"
+        "images/drlIcon.svg"
+        "images/lowBeam.svg"
 )
 
 

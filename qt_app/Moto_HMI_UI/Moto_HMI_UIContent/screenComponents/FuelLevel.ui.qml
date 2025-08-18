@@ -9,7 +9,7 @@ Rectangle {
     id: rectangle
     width: Constants.width
     height: Constants.height
-    color: "#000000"
+    color: "#00000000"
     state: "normalLevel"
 
     Image {
@@ -21,7 +21,7 @@ Rectangle {
     LottieAnimation {
         id: fuelLevelAnimation
         autoPlay: false
-        x: 58
+        x: 59
         y: 133
         width: 187
         height: 428

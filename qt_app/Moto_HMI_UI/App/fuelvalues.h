@@ -1,3 +1,7 @@
+//Fuel backend for interace
+//Displaing fuel level, aproximated range, liter per 100 km,
+//handling low fuel levels
+
 #ifndef FUELVALUES_H
 #define FUELVALUES_H
 

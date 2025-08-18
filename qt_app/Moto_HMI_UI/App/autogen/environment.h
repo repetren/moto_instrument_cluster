@@ -8,8 +8,8 @@
 #include <QGuiApplication>
 #include "qqmlextensionplugin.h"
 
-Q_IMPORT_QML_PLUGIN(Moto_HMI_UIPlugin)
 Q_IMPORT_QML_PLUGIN(Moto_HMI_UIContentPlugin)
+Q_IMPORT_QML_PLUGIN(Moto_HMI_UIPlugin)
 
 const char mainQmlFile[] = "qrc:/qt/qml/Moto_HMI_UIContent/App.qml";
 

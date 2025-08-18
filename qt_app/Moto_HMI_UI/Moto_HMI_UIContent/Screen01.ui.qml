@@ -28,9 +28,37 @@ Rectangle {
         id: fuelLevel
     }
 
-    states: [
-        State {
-            name: "clicked"
+    Loader {
+        id: turnLeftLoader
+        visible: lightsBackend.turnLeft
+        anchors.fill: parent
+
+        Turn {
+            id: turnLeft
         }
-    ]
+    }
+
+    Loader {
+        id: turnRightLoader
+        x: 1560
+        y: 0
+        width: 200
+        height: 200
+        visible: lightsBackend.turnRight
+
+        transform: Scale {
+            xScale: -1
+            yScale: 1
+        }
+
+        Turn {
+            id: turnRignt
+        }
+    }
+
+    LightsIcons {
+        id: lightsIcons
+        x: 0
+        y: 0
+    }
 }
