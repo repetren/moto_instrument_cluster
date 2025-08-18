@@ -10,8 +10,8 @@ Rectangle {
     width: Constants.width
     height: Constants.height
     color: "#000000"
+    state: "normalLevel"
 
-    // state: fuelBackend.lowLevel ? "lowFuelAllert" : "Base State"
     Image {
         id: fuelBG_v001
         anchors.fill: parent
@@ -20,7 +20,7 @@ Rectangle {
     }
     LottieAnimation {
         id: fuelLevelAnimation
-        autoPlay: true
+        autoPlay: false
         x: 58
         y: 133
         width: 187
@@ -28,6 +28,7 @@ Rectangle {
         source: "../lottie/fuelLineAnim_v001.json"
         loops: -1
 
+        //Lottie animation conversion from value from backend to lottie frame
         Connections {
             target: fuelBackend
             onFuelLevelChanged: {
@@ -88,29 +89,12 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
     }
 
-    Connections {
-        id: connections
-        target: fuelBackend
-
-        onLowLevelChanged: {
-
-            if (fuelBackend.lowLevel) {
-                rectangle.state = "lowFuelAllert"
-            } else {
-                rectangle.state = "Base State"
-            }
-        }
-    }
-
     Timeline {
-        id: lowFuelAnimation
+        id: timeline
         animations: [
             TimelineAnimation {
-                id: timelineAnimation
-                onFinished: {
-                    rectangle.state = "lowFuelAllert"
-                }
-                running: false
+                id: lowLevelAnim
+                running: true
                 loops: -1
                 duration: 1000
                 to: 1000
@@ -130,7 +114,7 @@ Rectangle {
             }
 
             Keyframe {
-                value: 0.2
+                value: 0.20297
                 frame: 500
             }
 
@@ -143,7 +127,22 @@ Rectangle {
 
     states: [
         State {
-            name: "lowFuelAllert"
+            name: "normalLevel"
+            when: !fuelBackend.lowLevel
+
+            PropertyChanges {
+                target: timeline
+                enabled: false
+            }
+
+            PropertyChanges {
+                target: lowLevelAnim
+                running: false
+            }
+        },
+        State {
+            name: "lowLevel"
+            when: fuelBackend.lowLevel
 
             PropertyChanges {
                 target: fuelIcon_v001
@@ -152,41 +151,14 @@ Rectangle {
             }
 
             PropertyChanges {
-                target: lowFuelAnimation
+                target: timeline
                 enabled: true
             }
 
             PropertyChanges {
-                target: timelineAnimation
+                target: lowLevelAnim
                 running: true
             }
         }
     ]
-    transitions: [
-        Transition {
-            id: transition
-            ParallelAnimation {
-                SequentialAnimation {
-                    PauseAnimation {
-                        duration: 0
-                    }
-
-                    PropertyAnimation {
-                        target: fuelIcon_v001
-                        property: "opacity"
-                        duration: 150
-                    }
-                }
-            }
-            to: "*"
-            from: "*"
-        }
-    ]
 }
-
-/*##^##
-Designer {
-    D{i:0}D{i:20;transitionDuration:2000}
-}
-##^##*/
-
