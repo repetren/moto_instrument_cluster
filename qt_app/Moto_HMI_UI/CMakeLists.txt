@@ -22,7 +22,8 @@ qt_standard_project_setup()
 
 qt_add_executable(${CMAKE_PROJECT_NAME}
     App/fuelvalues.h App/fuelvalues.cpp
-    App/lightsicons.h App/lightsicons.cpp)
+    App/lightsicons.h App/lightsicons.cpp
+    App/telemetrydata.h App/telemetrydata.cpp)
 qt_add_resources(${CMAKE_PROJECT_NAME} "configuration"
     PREFIX "/"
     FILES

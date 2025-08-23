@@ -20,11 +20,13 @@ class FuelValues : public QObject
 public:
     explicit FuelValues(QObject *parent = nullptr);
 
+    //Getter functions
     uint16_t fuelLevel() const;
     uint16_t fuelRange() const;
     uint8_t litersPerKm() const;
     bool lowLevel() const;
 
+    // Setter functions
     void updateFuelLevel(uint16_t value);
     void updateFuelRange(uint16_t value);
     void updateLowLevel(bool value);

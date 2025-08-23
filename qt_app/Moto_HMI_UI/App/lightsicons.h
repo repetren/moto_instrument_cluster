@@ -1,3 +1,6 @@
+// Lights indicator class
+// Turn indicators, beam modes
+
 #ifndef LIGHTSICONS_H
 #define LIGHTSICONS_H
 
@@ -15,11 +18,13 @@ class LightsIcons : public QObject
 public:
     explicit LightsIcons (QObject *parent = nullptr);
 
+    //Getter functions
     bool turnLeft() const;
     bool turnRight() const;
     bool drlState() const;
     int beamMode() const;
 
+    //Setter functions
     void updateTurnLeft(bool flag);
     void updateTurnRight(bool flag);
     void updateDrlState(bool flag);

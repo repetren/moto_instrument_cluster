@@ -17,11 +17,9 @@ Rectangle {
     height: Constants.height
     color: "#000000"
 
-    Image {
+    RpmScale {
         id: backRPM_v001
-        visible: true
         anchors.fill: parent
-        source: "images/backRPM_v001.svg"
     }
 
     FuelLevel {

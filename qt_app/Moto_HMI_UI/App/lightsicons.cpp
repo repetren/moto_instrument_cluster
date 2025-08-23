@@ -6,6 +6,8 @@ LightsIcons::LightsIcons(QObject *parent)
 
 {}
 
+// Getter decalrations
+
 bool LightsIcons::turnLeft() const {
     return m_turnLeft;
 }
@@ -21,6 +23,8 @@ bool LightsIcons::drlState() const {
 int LightsIcons::beamMode() const {
     return m_beamMode;
 }
+
+// Setter declatation
 
 void LightsIcons::updateTurnLeft(bool flag) {
     m_turnLeft = flag;

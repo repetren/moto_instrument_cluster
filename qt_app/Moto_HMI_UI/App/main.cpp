@@ -5,6 +5,7 @@
 #include <QQmlApplicationEngine>
 #include "fuelvalues.h"
 #include "lightsicons.h"
+#include "telemetrydata.h"
 #include <QQmlContext>
 #include "autogen/environment.h"
 #include <QThread>
@@ -18,11 +19,17 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
+
+    // Declaring classes for CAN values
     FuelValues fuelBackend;
     LightsIcons lightsBackend;
+    TelemetryData telemetryBackend;
 
+
+    // Bridge values form C++ to Qt/QML
     engine.rootContext()->setContextProperty("fuelBackend", &fuelBackend);
     engine.rootContext()->setContextProperty("lightsBackend", &lightsBackend);
+    engine.rootContext()->setContextProperty("telemetryBackend", &telemetryBackend);
 
     const QUrl url(mainQmlFile);
     QObject::connect(
@@ -39,17 +46,19 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty())
         return -1;
 
-    // Test input timer
+    // TEST IMTPUT TIMER START BLOCK
 
     QTimer* timer = new QTimer;
     int fakeValue = 1200;
     int turnCounter = 0;
+    uint16_t rpm = 0;
 
     QObject::connect(timer, &QTimer::timeout, [&]() {
         fakeValue = fakeValue - 10;
-        if (fakeValue < 0) {
-            fakeValue = 1200;
-        }
+
+
+
+        // Turn and lights sumulator
 
         turnCounter++;
             if (turnCounter < 50) {
@@ -77,6 +86,13 @@ int main(int argc, char *argv[])
 
             // qDebug() << "Turn counter: " << turnCounter << " flag:" << lightsBackend.turnLeft();
 
+
+        // Fuel simulator
+
+        if (fakeValue < 0) {
+            fakeValue = 1200;
+        }
+
         fuelBackend.updateFuelLevel(fakeValue);
 
         fuelBackend.updateFuelRange(fakeValue / 204.8 / 4 * 100);
@@ -93,9 +109,19 @@ int main(int argc, char *argv[])
 
         }
 
+        // Telemetry simulator
+
+
+
+        telemetryBackend.updateRpmValue(rpm += 10);
+
+        if (rpm >= 4096) { rpm = 0; }
+
     });
 
     timer->start(100);
+
+    // TEST IMTPUT TIMER END BLOCK
 
 
     return app.exec();
