@@ -15,6 +15,7 @@ qt6_add_qml_module(Moto_HMI_UIContent
         "screenComponents/LightsIcons.ui.qml"
         "screenComponents/FuelLevel.ui.qml"
         "screenComponents/RpmScale.ui.qml"
+        "screenComponents/SpeedValue.ui.qml"
     RESOURCES
         "images/fuelIcon_allert_v001.svg"
         "images/lowBeam.svg"
@@ -30,6 +31,14 @@ qt6_add_qml_module(Moto_HMI_UIContent
         "lottie/drlicon.json"
         "lottie/fuelLineAnim_v001.json"
         "lottie/rpmLine.json"
+        "fonts/RobotoMono-Bold.ttf"
+        "fonts/RobotoMono-Bold.ttf"
+        "fonts/SF-Mono-Bold.ttf"
+        "fonts/SF-Mono-Bold.ttf"
+        "fonts/FF-DIN-Bold.ttf"
+        "fonts/FF-DIN-Bold.ttf"
+        "fonts/Gilroy-Bold.ttf"
+        "fonts/Gilroy-Bold.ttf"
 )
 
 

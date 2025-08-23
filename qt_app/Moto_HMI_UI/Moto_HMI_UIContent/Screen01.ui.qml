@@ -59,4 +59,21 @@ Rectangle {
         x: 0
         y: 0
     }
+
+    SpeedValue {
+        id: speedValue
+        anchors.fill: parent
+    }
+
+    Text {
+        id: kmTitle
+        y: 125
+        color: "#ffffff"
+        text: qsTr("km/h")
+        font.pixelSize: 30
+        horizontalAlignment: Text.AlignHCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.styleName: "Light"
+        font.family: "SF Pro"
+    }
 }

@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
     int fakeValue = 1200;
     int turnCounter = 0;
     uint16_t rpm = 0;
+    uint16_t speed = 0;
 
     QObject::connect(timer, &QTimer::timeout, [&]() {
         fakeValue = fakeValue - 10;
@@ -110,12 +111,14 @@ int main(int argc, char *argv[])
         }
 
         // Telemetry simulator
-
-
-
         telemetryBackend.updateRpmValue(rpm += 10);
+        telemetryBackend.updateSpeedValue(speed++);
+
+        qDebug() << "Speed: " << telemetryBackend.speedValue();
 
         if (rpm >= 4096) { rpm = 0; }
+        if (speed >= 280) { speed = 0; }
+
 
     });
 

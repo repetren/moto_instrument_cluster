@@ -6,7 +6,7 @@ Rectangle {
     id: rootRectangle
     width: Constants.width
     height: Constants.height
-    color: "#000000"
+    color: "#00000000"
 
     Image {
         id: backRPM_v001
