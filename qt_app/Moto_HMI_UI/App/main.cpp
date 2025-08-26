@@ -6,6 +6,7 @@
 #include "fuelvalues.h"
 #include "lightsicons.h"
 #include "telemetrydata.h"
+#include "errorhandler.h"
 #include <QQmlContext>
 #include "autogen/environment.h"
 #include <QThread>
@@ -24,12 +25,14 @@ int main(int argc, char *argv[])
     FuelValues fuelBackend;
     LightsIcons lightsBackend;
     TelemetryData telemetryBackend;
+    ErrorHandler errorBackend;
 
 
     // Bridge values form C++ to Qt/QML
     engine.rootContext()->setContextProperty("fuelBackend", &fuelBackend);
     engine.rootContext()->setContextProperty("lightsBackend", &lightsBackend);
     engine.rootContext()->setContextProperty("telemetryBackend", &telemetryBackend);
+    engine.rootContext()->setContextProperty("errorBackend", &errorBackend);
 
     const QUrl url(mainQmlFile);
     QObject::connect(
@@ -51,6 +54,8 @@ int main(int argc, char *argv[])
     QTimer* timer = new QTimer;
     int fakeValue = 1200;
     int turnCounter = 0;
+    int errorCounter = 0;
+    int markCounter = 0;
     uint16_t rpm = 0;
     uint16_t speed = 0;
 
@@ -114,11 +119,26 @@ int main(int argc, char *argv[])
         telemetryBackend.updateRpmValue(rpm += 10);
         telemetryBackend.updateSpeedValue(speed++);
 
-        qDebug() << "Speed: " << telemetryBackend.speedValue();
+        // qDebug() << "Speed: " << telemetryBackend.speedValue();
 
         if (rpm >= 4096) { rpm = 0; }
         if (speed >= 280) { speed = 0; }
 
+        errorCounter++;
+        markCounter++;
+
+        if (errorCounter == 50) {
+            errorBackend.test(50);
+        } else if (errorCounter == 100) {
+            errorBackend.test(100);
+        } else if (errorCounter == 150) {
+            errorBackend.test(150);
+        } else if (errorCounter == 200) {
+            errorBackend.removeError(150);
+        } else if (errorCounter == 250) {
+            errorBackend.removeError(50);
+            errorCounter = 0;
+        }
 
     });
 

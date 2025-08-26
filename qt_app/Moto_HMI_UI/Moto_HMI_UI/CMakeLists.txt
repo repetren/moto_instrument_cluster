@@ -15,8 +15,8 @@ qt6_add_qml_module(Moto_HMI_UI
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         "Constants.qml"
-        "EventListModel.qml"
         "EventListSimulator.qml"
+        "EventListModel.qml"
 )
 
 

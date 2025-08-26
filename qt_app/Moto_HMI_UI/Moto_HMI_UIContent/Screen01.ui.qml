@@ -10,6 +10,7 @@ import QtQuick
 import QtQuick.Controls
 import Moto_HMI_UI
 import "screenComponents"
+import Qt.labs.lottieqt 1.0
 
 Rectangle {
     id: rootRectangle
@@ -75,5 +76,9 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         font.styleName: "Light"
         font.family: "SF Pro"
+    }
+
+    NotificationCenter {
+        id: notificationCenter
     }
 }
