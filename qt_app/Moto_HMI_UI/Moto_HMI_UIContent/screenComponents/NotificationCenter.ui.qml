@@ -22,6 +22,10 @@ Rectangle {
 
     property var instance: null
 
+    NotificationCode {
+        id: testcode
+    }
+
     Component {
         id: notification
         Notification {}
@@ -71,8 +75,8 @@ Rectangle {
                 // Error update or second throw
                 for (var i = 0; i < swipeView.count; i++) {
                     // Checking for existed same error in list
-                    if (swipeView.itemAt(i).notificationText === String(
-                                notificationHandler.notificationCode)) {
+                    if (swipeView.itemAt(
+                                i).notificationCode === notificationHandler.notificationCode) {
 
                         // Moving error component to list top and highligting
                         swipeView.currentIndex = i
@@ -85,7 +89,8 @@ Rectangle {
 
                 // Error initialisation
                 instance = notification.createObject(swipeView, {
-                                                         "notificationText": notificationHandler.notificationCode
+                                                         "notificationCode": notificationHandler.notificationCode,
+                                                         "notificationText": testcode.errorToText(notificationHandler.notificationCode)
                                                      })
                 swipeView.insertItem(1, instance)
                 swipeView.currentIndex = 1
@@ -95,8 +100,8 @@ Rectangle {
 
             onRemoveNotificationSignal: {
                 for (var i = 0; i < swipeView.count; i++) {
-                    if (swipeView.itemAt(i).notificationText === String(
-                                notificationHandler.notificationCode)) {
+                    if (swipeView.itemAt(
+                                i).notificationCode === notificationHandler.notificationCode) {
                         if (i === swipeView.currentIndex) {
                             swipeView.currentIndex++
                         }
@@ -244,7 +249,7 @@ Rectangle {
 
 /*##^##
 Designer {
-    D{i:0}D{i:27;transitionDuration:2000}
+    D{i:0}D{i:28;transitionDuration:2000}
 }
 ##^##*/
 

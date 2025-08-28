@@ -8,6 +8,7 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 */
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 
 Item {
     id: root
@@ -15,14 +16,15 @@ Item {
     height: 113
 
     property alias notificationText: notificationText.text
+    property int notificationCode: 0
 
     Text {
         id: notificationText
+        y: 32
         color: "#ffffff"
         text: qsTr("Error")
         font.pixelSize: 40
-        anchors.verticalCenterOffset: -1
-        anchors.horizontalCenterOffset: 0
-        anchors.centerIn: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.family: "SF Pro"
     }
 }
