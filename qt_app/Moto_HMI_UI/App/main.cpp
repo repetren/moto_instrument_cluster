@@ -6,7 +6,7 @@
 #include "fuelvalues.h"
 #include "lightsicons.h"
 #include "telemetrydata.h"
-#include "errorhandler.h"
+#include "notificationhandler.h"
 #include <QQmlContext>
 #include "autogen/environment.h"
 #include <QThread>
@@ -25,14 +25,14 @@ int main(int argc, char *argv[])
     FuelValues fuelBackend;
     LightsIcons lightsBackend;
     TelemetryData telemetryBackend;
-    ErrorHandler errorBackend;
+    NotificationHandler notificationHandler;
 
 
     // Bridge values form C++ to Qt/QML
     engine.rootContext()->setContextProperty("fuelBackend", &fuelBackend);
     engine.rootContext()->setContextProperty("lightsBackend", &lightsBackend);
     engine.rootContext()->setContextProperty("telemetryBackend", &telemetryBackend);
-    engine.rootContext()->setContextProperty("errorBackend", &errorBackend);
+    engine.rootContext()->setContextProperty("notificationHandler", &notificationHandler);
 
     const QUrl url(mainQmlFile);
     QObject::connect(
@@ -128,15 +128,15 @@ int main(int argc, char *argv[])
         markCounter++;
 
         if (errorCounter == 50) {
-            errorBackend.test(50);
+            notificationHandler.newNotification(50);
         } else if (errorCounter == 100) {
-            errorBackend.test(100);
+            notificationHandler.newNotification(100);
         } else if (errorCounter == 150) {
-            errorBackend.test(150);
+            notificationHandler.newNotification(150);
         } else if (errorCounter == 200) {
-            errorBackend.removeError(150);
+            notificationHandler.removeNotification(150);
         } else if (errorCounter == 250) {
-            errorBackend.removeError(50);
+            notificationHandler.removeNotification(50);
             errorCounter = 0;
         }
 

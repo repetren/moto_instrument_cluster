@@ -14,10 +14,10 @@ Item {
     width: 822
     height: 113
 
-    property alias error: errorText.text
+    property alias notificationText: notificationText.text
 
     Text {
-        id: errorText
+        id: notificationText
         color: "#ffffff"
         text: qsTr("Error")
         font.pixelSize: 40

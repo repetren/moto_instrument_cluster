@@ -57,8 +57,6 @@ Rectangle {
 
     LightsIcons {
         id: lightsIcons
-        x: 0
-        y: 0
     }
 
     SpeedValue {

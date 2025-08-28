@@ -29,8 +29,6 @@ Rectangle {
 
     Image {
         id: notification_bg
-        x: 0
-        y: 0
         source: "../images/notification_bg.svg"
         fillMode: Image.PreserveAspectFit
     }
@@ -68,13 +66,13 @@ Rectangle {
         }
 
         Connections {
-            target: errorBackend
-            onNewErrorSignal: {
+            target: notificationHandler
+            onNewNotificationSignal: {
                 // Error update or second throw
                 for (var i = 0; i < swipeView.count; i++) {
                     // Checking for existed same error in list
-                    if (swipeView.itemAt(i).error === String(
-                                errorBackend.mark)) {
+                    if (swipeView.itemAt(i).notificationText === String(
+                                notificationHandler.notificationCode)) {
 
                         // Moving error component to list top and highligting
                         swipeView.currentIndex = i
@@ -87,23 +85,22 @@ Rectangle {
 
                 // Error initialisation
                 instance = notification.createObject(swipeView, {
-                                                         "error": errorBackend.mark
+                                                         "notificationText": notificationHandler.notificationCode
                                                      })
                 swipeView.insertItem(1, instance)
                 swipeView.currentIndex = 1
                 root.state = "highlight"
                 highlightAnimation.start()
             }
-            onRemoveErrorSignal: {
-                console.log("Removig:", errorBackend.deleteMark)
+
+            onRemoveNotificationSignal: {
                 for (var i = 0; i < swipeView.count; i++) {
-                    if (swipeView.itemAt(i).error === String(
-                                errorBackend.deleteMark)) {
+                    if (swipeView.itemAt(i).notificationText === String(
+                                notificationHandler.notificationCode)) {
                         if (i === swipeView.currentIndex) {
                             swipeView.currentIndex++
                         }
                         swipeView.itemAt(i).destroy()
-                        console.log("Destroyed:", errorBackend.deleteMark)
                         return
                     }
                 }
