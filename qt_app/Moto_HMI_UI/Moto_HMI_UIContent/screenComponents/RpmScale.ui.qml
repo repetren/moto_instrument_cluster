@@ -12,8 +12,16 @@ Rectangle {
         id: backRPM_v001
         x: 0
         y: 0
-        visible: true
+        visible: false
         source: "../images/backRPM_v001.svg"
+    }
+
+    Image {
+        id: rpmBg
+        x: 0
+        y: 0
+        source: "../images/rpmBg.svg"
+        fillMode: Image.PreserveAspectFit
     }
 
     LottieAnimation {

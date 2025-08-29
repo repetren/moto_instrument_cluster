@@ -30,9 +30,9 @@ Rectangle {
 
         //Lottie animation conversion from value from backend to lottie frame
         Connections {
-            target: fuelBackend
-            onFuelLevelChanged: {
-                fuelLevelAnimation.gotoAndStop(fuelBackend.fuelLevel)
+            target: fuelLevel
+            onValueChanged: {
+                fuelLevelAnimation.gotoAndStop(fuelLevel.value)
             }
         }
 
@@ -41,7 +41,7 @@ Rectangle {
             x: -35
             y: -33
             color: "#ffffff"
-            text: fuelBackend.litersPerKm + " L"
+            text: litersPerKm.value + " L"
             font.pixelSize: 30
             font.styleName: "Bold"
             font.family: "SF Pro"
@@ -51,8 +51,8 @@ Rectangle {
             id: kmTitle
             x: -35
             y: 0
-            color: "#ffffff"
-            text: qsTr("per 100km")
+            color: "#4d4d4d"
+            text: qsTr("/100km")
             font.pixelSize: 30
             font.styleName: "Light"
             font.family: "SF Pro"
@@ -63,7 +63,7 @@ Rectangle {
             x: -35
             y: 58
             color: "#ffffff"
-            text: fuelBackend.fuelRange + " km"
+            text: fuelRange.value + " km"
             font.pixelSize: 30
             font.styleName: "Bold"
             font.family: "SF Pro"
@@ -73,7 +73,7 @@ Rectangle {
             id: kmTitle1
             x: -35
             y: 91
-            color: "#ffffff"
+            color: "#4d4d4d"
             text: qsTr("Range")
             font.pixelSize: 30
             font.styleName: "Light"
@@ -128,7 +128,7 @@ Rectangle {
     states: [
         State {
             name: "normalLevel"
-            when: !fuelBackend.lowLevel
+            when: !lowFuelLevel.flag
 
             PropertyChanges {
                 target: timeline
@@ -142,7 +142,7 @@ Rectangle {
         },
         State {
             name: "lowLevel"
-            when: fuelBackend.lowLevel
+            when: lowFuelLevel.flag
 
             PropertyChanges {
                 target: fuelIcon_v001

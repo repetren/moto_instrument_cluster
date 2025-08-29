@@ -23,8 +23,17 @@ Rectangle {
         anchors.fill: parent
     }
 
-    FuelLevel {
-        id: fuelLevel
+    GearShifter {
+        id: gearShifter
+        x: 1304
+        y: 0
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+    }
+
+    Fuel {
+        id: fuel
     }
 
     Loader {
@@ -66,12 +75,12 @@ Rectangle {
 
     Text {
         id: kmTitle
-        y: 125
-        color: "#ffffff"
+        x: 1224
+        y: 130
+        color: "#4d4d4d"
         text: qsTr("km/h")
         font.pixelSize: 30
         horizontalAlignment: Text.AlignHCenter
-        anchors.horizontalCenter: parent.horizontalCenter
         font.styleName: "Light"
         font.family: "SF Pro"
     }

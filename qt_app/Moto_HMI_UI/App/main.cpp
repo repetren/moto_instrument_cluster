@@ -7,6 +7,7 @@
 #include "lightsicons.h"
 #include "telemetrydata.h"
 #include "notificationhandler.h"
+#include "bridgeregistry.h"
 #include <QQmlContext>
 #include "autogen/environment.h"
 #include <QThread>
@@ -20,19 +21,21 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
+    BridgeRegistry bridge;
+    bridge.registerAll(engine);
+
 
     // Declaring classes for CAN values
-    FuelValues fuelBackend;
     LightsIcons lightsBackend;
     TelemetryData telemetryBackend;
     NotificationHandler notificationHandler;
 
 
     // Bridge values form C++ to Qt/QML
-    engine.rootContext()->setContextProperty("fuelBackend", &fuelBackend);
     engine.rootContext()->setContextProperty("lightsBackend", &lightsBackend);
     engine.rootContext()->setContextProperty("telemetryBackend", &telemetryBackend);
     engine.rootContext()->setContextProperty("notificationHandler", &notificationHandler);
+
 
     const QUrl url(mainQmlFile);
     QObject::connect(
@@ -99,18 +102,20 @@ int main(int argc, char *argv[])
             fakeValue = 1200;
         }
 
-        fuelBackend.updateFuelLevel(fakeValue);
+        bridge.litersPerKm.setValue(8);
 
-        fuelBackend.updateFuelRange(fakeValue / 204.8 / 4 * 100);
+        bridge.fuelLevel.setValue(fakeValue);
+
+        bridge.fuelRange.setValue(fakeValue / 204.8 / 4 * 100);
 
         if (fakeValue < 800) {
-            if (fuelBackend.lowLevel() != true) {
-                    fuelBackend.updateLowLevel(true);
+            if (bridge.lowFuelLevel.flag() != true) {
+                    bridge.lowFuelLevel.setFlag(true);
                 }
 
         } else {
-            if (fuelBackend.lowLevel() != false) {
-                    fuelBackend.updateLowLevel(false);
+            if (bridge.lowFuelLevel.flag() != false) {
+                    bridge.lowFuelLevel.setFlag(false);
                 }
 
         }
@@ -129,9 +134,11 @@ int main(int argc, char *argv[])
 
         if (errorCounter == 50) {
             notificationHandler.newNotification(50);
+            bridge.odoValue.setValue(200);
         } else if (errorCounter == 100) {
             notificationHandler.newNotification(100);
         } else if (errorCounter == 150) {
+            bridge.odoValue.setValue(800);
             notificationHandler.newNotification(150);
         } else if (errorCounter == 200) {
             notificationHandler.removeNotification(150);

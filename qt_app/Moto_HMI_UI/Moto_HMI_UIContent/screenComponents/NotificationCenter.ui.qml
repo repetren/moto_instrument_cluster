@@ -20,8 +20,6 @@ Rectangle {
     color: "#00ffffff"
     state: "clear"
 
-    property var instance: null
-
     NotificationCode {
         id: testcode
     }
@@ -44,6 +42,10 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
     }
 
+    // declarig global variables for notification handling
+    property var instance: null
+    property int code: 0
+
     SwipeView {
         id: swipeView
         x: 403
@@ -55,6 +57,10 @@ Rectangle {
         transformOrigin: Item.Center
         clip: true
         orientation: Qt.Vertical
+
+        TripInfo {
+            id: tripInfo
+        }
 
         Notification {
             id: trip
@@ -72,36 +78,41 @@ Rectangle {
         Connections {
             target: notificationHandler
             onNewNotificationSignal: {
-                // Error update or second throw
+
+                code = notificationHandler.notificationCode
+
+                // Notification update or second throw
                 for (var i = 0; i < swipeView.count; i++) {
                     // Checking for existed same error in list
-                    if (swipeView.itemAt(
-                                i).notificationCode === notificationHandler.notificationCode) {
+                    if (swipeView.itemAt(i).notificationCode === code) {
 
-                        // Moving error component to list top and highligting
+                        // Moving notification component to list top and highligting
                         swipeView.currentIndex = i
-                        swipeView.moveItem(i, 1)
+                        swipeView.moveItem(i, 2)
                         root.state = "highlight"
                         highlightAnimation.start()
                         return
                     }
                 }
 
-                // Error initialisation
+                // notification initialisation
                 instance = notification.createObject(swipeView, {
-                                                         "notificationCode": notificationHandler.notificationCode,
-                                                         "notificationText": testcode.errorToText(notificationHandler.notificationCode)
+                                                         "notificationCode": code,
+                                                         "notificationText": testcode.errorToText(
+                                                                                 code)
                                                      })
-                swipeView.insertItem(1, instance)
-                swipeView.currentIndex = 1
+                swipeView.insertItem(2, instance)
+                swipeView.currentIndex = 2
                 root.state = "highlight"
                 highlightAnimation.start()
             }
 
             onRemoveNotificationSignal: {
+
+                code = notificationHandler.notificationCode
+
                 for (var i = 0; i < swipeView.count; i++) {
-                    if (swipeView.itemAt(
-                                i).notificationCode === notificationHandler.notificationCode) {
+                    if (swipeView.itemAt(i).notificationCode === code) {
                         if (i === swipeView.currentIndex) {
                             swipeView.currentIndex++
                         }
@@ -249,7 +260,7 @@ Rectangle {
 
 /*##^##
 Designer {
-    D{i:0}D{i:28;transitionDuration:2000}
+    D{i:0}D{i:29;transitionDuration:2000}
 }
 ##^##*/
 
