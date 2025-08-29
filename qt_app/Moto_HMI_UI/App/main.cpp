@@ -3,9 +3,6 @@
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
-#include "fuelvalues.h"
-#include "lightsicons.h"
-#include "telemetrydata.h"
 #include "notificationhandler.h"
 #include "bridgeregistry.h"
 #include <QQmlContext>
@@ -21,21 +18,12 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
+    // Bridge respondible for creating classes for values backend
     BridgeRegistry bridge;
     bridge.registerAll(engine);
 
-
-    // Declaring classes for CAN values
-    LightsIcons lightsBackend;
-    TelemetryData telemetryBackend;
     NotificationHandler notificationHandler;
-
-
-    // Bridge values form C++ to Qt/QML
-    engine.rootContext()->setContextProperty("lightsBackend", &lightsBackend);
-    engine.rootContext()->setContextProperty("telemetryBackend", &telemetryBackend);
     engine.rootContext()->setContextProperty("notificationHandler", &notificationHandler);
-
 
     const QUrl url(mainQmlFile);
     QObject::connect(
@@ -71,22 +59,22 @@ int main(int argc, char *argv[])
 
         turnCounter++;
             if (turnCounter < 50) {
-                lightsBackend.updateTurnRight(false);
-                lightsBackend.updateTurnLeft(false);
-                lightsBackend.updateDrlState(true);
-                lightsBackend.updateBeamMode(0);
+                bridge.turnRight.setFlag(false);
+                bridge.turnLeft.setFlag(false);
+                bridge.drlState.setFlag(true);
+                bridge.beamMode.setValue(0);
             }
 
             else if (turnCounter >= 50 && turnCounter < 100) {
-                lightsBackend.updateTurnLeft(true);
-                lightsBackend.updateDrlState(false);
-                lightsBackend.updateBeamMode(1);
+                bridge.turnLeft.setFlag(true);
+                bridge.drlState.setFlag(false);
+                bridge.beamMode.setValue(1);
             }
 
             else if (turnCounter >= 100 && turnCounter < 150) {
-                lightsBackend.updateTurnLeft(false);
-                lightsBackend.updateTurnRight(true);
-                lightsBackend.updateBeamMode(2);
+                bridge.turnLeft.setFlag(false);
+                bridge.turnRight.setFlag(true);
+                bridge.beamMode.setValue(2);
             }
 
             else {
@@ -121,10 +109,12 @@ int main(int argc, char *argv[])
         }
 
         // Telemetry simulator
-        telemetryBackend.updateRpmValue(rpm += 10);
-        telemetryBackend.updateSpeedValue(speed++);
-
-        // qDebug() << "Speed: " << telemetryBackend.speedValue();
+        bridge.rpmBackend.setValue(rpm += 10);
+        bridge.speedBackend.setValue(speed++);
+        bridge.odoBackend.setValue(24400);
+        bridge.tripABackend.setValue(140);
+        bridge.engineTemp.setValue(89);
+        bridge.coolantTemp.setValue(85);
 
         if (rpm >= 4096) { rpm = 0; }
         if (speed >= 280) { speed = 0; }
@@ -134,11 +124,9 @@ int main(int argc, char *argv[])
 
         if (errorCounter == 50) {
             notificationHandler.newNotification(50);
-            bridge.odoValue.setValue(200);
         } else if (errorCounter == 100) {
             notificationHandler.newNotification(100);
         } else if (errorCounter == 150) {
-            bridge.odoValue.setValue(800);
             notificationHandler.newNotification(150);
         } else if (errorCounter == 200) {
             notificationHandler.removeNotification(150);

@@ -29,9 +29,9 @@ Rectangle {
         source: "../lottie/rpmLine.json"
 
         Connections {
-            target: telemetryBackend
-            onRpmValueChanged: {
-                rmpLineAnimation.gotoAndStop(telemetryBackend.rpmValue)
+            target: rpmBackend
+            onValueChanged: {
+                rmpLineAnimation.gotoAndStop(rpmBackend.value)
             }
         }
 

@@ -27,7 +27,7 @@ Item {
             y: 121
 
             color: "#ffffff"
-            text: telemetryBackend.speedValue
+            text: speedBackend.value
             anchors.left: parent.left
             // text: "100"
             anchors.right: parent.right
@@ -44,9 +44,9 @@ Item {
             // Adjusting 'x' margin for non-monospace fontSizeMode
             // Helps to achieve equal tabular look
             Connections {
-                target: telemetryBackend
-                function onSpeedValueChanged() {
-                    let speed = telemetryBackend.speedValue
+                target: speedBackend
+                function onValueChanged() {
+                    let speed = speedBackend.value
 
                     if (speed >= 0 && speed < 10) {
                         speedText.anchors.leftMargin = 1236

@@ -20,11 +20,10 @@ Item {
 
     Text {
         id: notificationText
-        y: 32
         color: "#ffffff"
         text: qsTr("Error")
-        font.pixelSize: 40
-        anchors.horizontalCenter: parent.horizontalCenter
+        font.pixelSize: 35
+        anchors.centerIn: parent
         font.family: "SF Pro"
     }
 }

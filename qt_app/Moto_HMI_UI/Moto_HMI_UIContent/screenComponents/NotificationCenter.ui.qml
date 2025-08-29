@@ -62,11 +62,12 @@ Rectangle {
             id: tripInfo
         }
 
-        Notification {
-            id: trip
+        Temp {
+            id: tempInfo
         }
 
         Connections {
+            id: clearState
             // Removing highlight state on scroll
             target: swipeView
             onCurrentIndexChanged: {
@@ -76,6 +77,8 @@ Rectangle {
         }
 
         Connections {
+            id: notificationView
+
             target: notificationHandler
             onNewNotificationSignal: {
 

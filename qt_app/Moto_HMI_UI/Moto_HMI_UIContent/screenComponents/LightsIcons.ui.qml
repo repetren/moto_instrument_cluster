@@ -20,7 +20,7 @@ Rectangle {
         id: highBeam
         x: 244
         y: 28
-        visible: lightsBackend.beamMode === 2
+        visible: beamMode.value === 2
         source: "../images/highBeam.svg"
         fillMode: Image.PreserveAspectFit
     }
@@ -31,14 +31,14 @@ Rectangle {
         y: 34
         source: "../images/drlIcon.svg"
         fillMode: Image.PreserveAspectFit
-        visible: lightsBackend.drlState
+        visible: drlState.flag
     }
 
     Image {
         id: lowBeam
         x: 244
         y: 28
-        visible: lightsBackend.beamMode === 1
+        visible: beamMode.value === 1
         source: "../images/lowBeam.svg"
         fillMode: Image.PreserveAspectFit
     }

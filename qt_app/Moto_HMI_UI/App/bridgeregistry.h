@@ -4,7 +4,8 @@
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
 
-#include "bridgetoqml.h"
+#include "App/flagtoqml.h"
+#include "valuetoqml.h"
 
 class BridgeRegistry {
 
@@ -16,25 +17,46 @@ public:
         auto context = engine.rootContext();
 
         // Telemetry contexts
-        context->setContextProperty("odoValue", &odoValue);
-        context->setContextProperty("tripAValue", &tripAValue);
+        context->setContextProperty("odoBackend", &odoBackend);
+        context->setContextProperty("tripABackend", &tripABackend);
+        context->setContextProperty("rpmBackend", &rpmBackend);
+        context->setContextProperty("speedBackend", &speedBackend);
+        context->setContextProperty("engineTemp", &engineTemp);
+        context->setContextProperty("coolantTemp", &coolantTemp);
 
         // Fuel contexts
         context->setContextProperty("litersPerKm", &litersPerKm);
         context->setContextProperty("fuelLevel", &fuelLevel);
         context->setContextProperty("fuelRange", &fuelRange);
         context->setContextProperty("lowFuelLevel", &lowFuelLevel);
+
+        // Lights objects
+        context->setContextProperty("turnLeft", &turnLeft);
+        context->setContextProperty("turnRight", &turnRight);
+        context->setContextProperty("drlState", &drlState);
+        context->setContextProperty("beamMode", &beamMode);
     }
 
     // Telemetry objects
-    BridgeToQML odoValue;
-    BridgeToQML tripAValue;
+    ValueToQML odoBackend;
+    ValueToQML tripABackend;
+    ValueToQML rpmBackend;
+    ValueToQML speedBackend;
+    ValueToQML engineTemp;
+    ValueToQML coolantTemp;
 
     // Fuel objects
-    BridgeToQML litersPerKm;
-    BridgeToQML fuelLevel;
-    BridgeToQML fuelRange;
-    BridgeToQML lowFuelLevel;
+    ValueToQML litersPerKm;
+    ValueToQML fuelLevel;
+    ValueToQML fuelRange;
+    FlagToQML lowFuelLevel;
+
+    // Lights objects
+    FlagToQML turnLeft;
+    FlagToQML turnRight;
+    FlagToQML drlState;
+    ValueToQML beamMode;
+
 
 };
 

@@ -22,6 +22,8 @@ qt6_add_qml_module(Moto_HMI_UIContent
         "screenComponents/GearShifter.ui.qml"
         "screenComponents/TripInfo.ui.qml"
         "screenComponents/Fuel.ui.qml"
+        "screenComponents/Temp.ui.qml"
+        "screenComponents/Tray.ui.qml"
     RESOURCES
         "bar_v001.json"
         "notificationcode.json"

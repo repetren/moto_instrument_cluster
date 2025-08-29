@@ -27,7 +27,7 @@ Item {
             Text {
                 id: tripA
                 color: "#ffffff"
-                text: qsTr("Trip A")
+                text: qsTr("Engine")
                 font.pixelSize: 35
                 font.styleName: "Bold"
                 font.family: "SF Pro"
@@ -36,7 +36,7 @@ Item {
             Text {
                 id: tripAKm
                 color: "#ffffff"
-                text: tripABackend.value + " km"
+                text: engineTemp.value + "°C"
                 font.pixelSize: 35
                 font.family: "SF Pro"
             }
@@ -45,18 +45,18 @@ Item {
         RowLayout {
             id: rowLayout1
             Text {
-                id: odo
+                id: tripA1
                 color: "#ffffff"
-                text: qsTr("Total")
+                text: qsTr("Coolant")
                 font.pixelSize: 35
                 font.styleName: "Bold"
                 font.family: "SF Pro"
             }
 
             Text {
-                id: odoKm
+                id: tripAKm1
                 color: "#ffffff"
-                text: odoBackend.value + " km"
+                text: coolantTemp.value + "°C"
                 font.pixelSize: 35
                 font.family: "SF Pro"
             }

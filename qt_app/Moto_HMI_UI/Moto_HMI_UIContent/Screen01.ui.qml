@@ -38,11 +38,11 @@ Rectangle {
 
     Loader {
         id: turnLeftLoader
-        visible: lightsBackend.turnLeft
+        visible: turnLeft.flag
         anchors.fill: parent
 
         Turn {
-            id: turnLeft
+            id: turnLeftComponent
         }
     }
 
@@ -52,7 +52,7 @@ Rectangle {
         y: 0
         width: 200
         height: 200
-        visible: lightsBackend.turnRight
+        visible: turnRight.flag
 
         transform: Scale {
             xScale: -1
@@ -60,7 +60,7 @@ Rectangle {
         }
 
         Turn {
-            id: turnRignt
+            id: turnRigntComponent
         }
     }
 
@@ -87,5 +87,11 @@ Rectangle {
 
     NotificationCenter {
         id: notificationCenter
+    }
+
+    Tray {
+        id: tray
+        x: 0
+        y: 0
     }
 }
