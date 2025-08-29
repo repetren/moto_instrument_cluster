@@ -53,7 +53,7 @@ Item {
                     } else if (speed >= 10 && speed < 100) {
                         speedText.anchors.leftMargin = 1000
                     } else if (speed >= 100 && speed < 200) {
-                        speedText.anchors.leftMargin = 800
+                        speedText.anchors.leftMargin = 780
                     } else {
                         speedText.anchors.leftMargin = 730
                     }

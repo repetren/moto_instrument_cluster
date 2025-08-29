@@ -8,7 +8,7 @@ import Moto_HMI_UI
 //     visible: true
 //     title: "Moto_HMI_UI"
 
-//     Screen01 {
+//     MainScreen {
 //         id: mainScreen
 //     }
 
@@ -28,7 +28,7 @@ Window {
     visible: true
     title: "Raspberry_v006"
 
-    Screen01 {
+    MainScreen {
         id: mainScreen
         x: isPi ? -420 : -(piWidth/4);
         y: isPi ? 420 : -(piHeight/4);

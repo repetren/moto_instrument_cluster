@@ -23,6 +23,12 @@ Rectangle {
         anchors.fill: parent
     }
 
+    Tray {
+        id: tray
+        x: 0
+        y: 0
+    }
+
     GearShifter {
         id: gearShifter
         x: 1304
@@ -76,7 +82,7 @@ Rectangle {
     Text {
         id: kmTitle
         x: 1224
-        y: 130
+        y: 120
         color: "#4d4d4d"
         text: qsTr("km/h")
         font.pixelSize: 30
@@ -87,11 +93,5 @@ Rectangle {
 
     NotificationCenter {
         id: notificationCenter
-    }
-
-    Tray {
-        id: tray
-        x: 0
-        y: 0
     }
 }

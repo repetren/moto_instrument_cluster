@@ -123,14 +123,19 @@ int main(int argc, char *argv[])
         markCounter++;
 
         if (errorCounter == 50) {
+            bridge.gearBox.setValue(1);
             notificationHandler.newNotification(50);
         } else if (errorCounter == 100) {
+            bridge.gearBox.setValue(2);
             notificationHandler.newNotification(100);
         } else if (errorCounter == 150) {
+            bridge.gearBox.setValue(3);
             notificationHandler.newNotification(150);
         } else if (errorCounter == 200) {
+            bridge.gearBox.setValue(4);
             notificationHandler.removeNotification(150);
         } else if (errorCounter == 250) {
+            bridge.gearBox.setValue(5);
             notificationHandler.removeNotification(50);
             errorCounter = 0;
         }

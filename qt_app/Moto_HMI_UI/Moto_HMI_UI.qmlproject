@@ -2,7 +2,7 @@ import QmlProject
 
 Project {
     mainFile: "Moto_HMI_UIContent/App.qml"
-    mainUiFile: "Moto_HMI_UIContent/Screen01.ui.qml"
+    mainUiFile: "Moto_HMI_UIContent/MainScreen.ui.qml"
 
     /* Include .qml, .js, and image files from current directory and subdirectories */
     QmlFiles {

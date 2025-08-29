@@ -23,6 +23,7 @@ public:
         context->setContextProperty("speedBackend", &speedBackend);
         context->setContextProperty("engineTemp", &engineTemp);
         context->setContextProperty("coolantTemp", &coolantTemp);
+        context->setContextProperty("gearBox", &gearBox);
 
         // Fuel contexts
         context->setContextProperty("litersPerKm", &litersPerKm);
@@ -44,6 +45,7 @@ public:
     ValueToQML speedBackend;
     ValueToQML engineTemp;
     ValueToQML coolantTemp;
+    ValueToQML gearBox;
 
     // Fuel objects
     ValueToQML litersPerKm;
