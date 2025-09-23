@@ -16,7 +16,8 @@ set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
     FORCE
 )
 
-find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Widgets Qml Quick QuickTimeline ShaderTools)
+find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Widgets Qml Quick QuickTimeline ShaderTools SerialBus)
+
 qt_standard_project_setup()
 
 
@@ -43,6 +44,17 @@ endif()
 if (LINK_INSIGHT)
     include(insight OPTIONAL)
 endif ()
+
+target_link_libraries(${CMAKE_PROJECT_NAME}
+    PRIVATE
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
+        Qt6::Qml
+        Qt6::Quick
+        Qt6::QuickTimeline
+        Qt6::SerialBus
+)
 
 include(GNUInstallDirs)
 install(TARGETS ${CMAKE_PROJECT_NAME}

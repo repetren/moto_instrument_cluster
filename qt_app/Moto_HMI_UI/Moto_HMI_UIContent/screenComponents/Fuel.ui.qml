@@ -41,7 +41,7 @@ Rectangle {
             x: -35
             y: -33
             color: "#ffffff"
-            text: litersPerKm.value + " L"
+            text: litersPerKm.value + " l"
             font.pixelSize: 30
             font.styleName: "Bold"
             font.family: "SF Pro"
