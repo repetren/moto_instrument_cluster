@@ -73,36 +73,75 @@ int main(int argc, char *argv[])
     frame.setPayload(payload);
 
     QObject::connect(device, &QCanBusDevice::framesReceived, [device, &bridge]() {
+
         while (device->framesAvailable()) {
             const QCanBusFrame frame = device->readFrame();
-            // qDebug() << "ID:" << Qt::hex << frame.frameId()
-            //          << "Payload:" << frame.payload().toHex();
+            qDebug() << "ID:" << Qt::hex << frame.frameId()
+                     << "Payload:" << frame.payload().toHex();
             QByteArray data = frame.payload();
-            // qDebug() << (static_cast<uint16_t>(data[1]) << 8 | data[2]);
 
-            if (bridge.gearBox.value() != static_cast<uint8_t>(data[0])) {
-                bridge.gearBox.setValue(static_cast<uint8_t>(data[0]));
-            }
+            switch (frame.frameId()) {
+            case 0x100: {
+                if (bridge.gearBox.value() != static_cast<uint8_t>(data[0])) {
+                    bridge.gearBox.setValue(static_cast<uint8_t>(data[0]));
+                }
 
-            uint16_t speed = static_cast<uint16_t>(data[1]) << 8 | data[2];
-            qDebug() << speed;
-            if (bridge.speedBackend.value() != speed) {
-                bridge.speedBackend.setValue(speed);
-            }
+                uint16_t speed = static_cast<uint16_t>(data[1]) << 8 | data[2];
+                qDebug() << speed;
+                if (bridge.speedBackend.value() != speed) {
+                    bridge.speedBackend.setValue(speed);
+                }
 
-            // uint16_t rpm = static_cast<uint16_t>(data[3]) << 8 | data[4];
-            bridge.rpmBackend.setValue(static_cast<uint16_t>(data[3]) << 8 | data[4]);
+                bridge.rpmBackend.setValue(static_cast<uint16_t>(data[3]) << 8 | data[4]);
 
                 uint16_t engine_temp = static_cast<uint16_t>(data[5]);
-            if (bridge.engineTemp.value() != engine_temp) {
-                bridge.engineTemp.setValue(engine_temp);
+                if (bridge.engineTemp.value() != engine_temp) {
+                    bridge.engineTemp.setValue(engine_temp);
+                }
             }
+                break;
+
+            case 0x110: {
+                bool turn_left = data[0] >> 7 & 0b1;
+                if (bridge.turnLeft.flag() != turn_left) {
+                    bridge.turnLeft.setFlag(turn_left);
+                }
+
+                bool turn_right = data[0] >> 6 & 0b01;
+                if (bridge.turnRight.flag() != turn_right) {
+                    bridge.turnRight.setFlag(turn_right);
+                }
+
+                uint8_t light_mode = data[0] >> 4 & 0b0011;
+                bridge.beamMode.setValue(light_mode);
+            }
+                break;
+
+
+            case 0x120: {
+                uint16_t fuel_level = static_cast<uint16_t>(data[0] << 8 | data[1]);
+                if (bridge.fuelLevel.value() != fuel_level) {
+                    bridge.fuelLevel.setValue(fuel_level);
+                }
+
+                if (bridge.litersPerKm.value() != static_cast<uint16_t>(data[2])) {
+                    bridge.litersPerKm.setValue(static_cast<uint16_t>(data[2]));
+                }
+
+                uint16_t fuel_range = static_cast<uint16_t>(data[3] << 8 | data[4]);
+
+                if (bridge.fuelRange.value() != fuel_range) {
+                    bridge.fuelRange.setValue(fuel_range);
+                }
+            }
+                break;
+
+            }
+
 
 
         }
     });
-
-
 
 
 
