@@ -13,10 +13,10 @@ class NotificationHandler : public QObject
 public:
     explicit NotificationHandler(QObject *parent = nullptr);
 
-    // Notification code getter function
+    // Getter
     int notificationCode() const;
 
-    // Notification setter function
+    // Setter
     void newNotification(int code);
     void removeNotification(int code);
 

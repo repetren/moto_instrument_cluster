@@ -11,6 +11,8 @@ uint16_t ValueToQML::value() const {
 }
 
 void ValueToQML::setValue(uint16_t newValue) {
-    m_value = newValue;
-    emit valueChanged();
+    if (newValue != m_value) {
+        m_value = newValue;
+        emit valueChanged();
+    }
 }

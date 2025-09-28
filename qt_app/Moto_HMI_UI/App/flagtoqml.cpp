@@ -11,6 +11,8 @@ bool FlagToQML::flag() const {
 }
 
 void FlagToQML::setFlag(bool newFlag) {
-    m_flag = newFlag;
-    emit flagChanged();
+    if (newFlag != m_flag) {
+        m_flag = newFlag;
+        emit flagChanged();
+    }
 }

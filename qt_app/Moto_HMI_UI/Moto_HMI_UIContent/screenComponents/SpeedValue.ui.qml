@@ -17,7 +17,7 @@ Item {
 
     Item {
         id: item1
-        x: -250
+        x: 0
         y: 0
         width: parent.width
         height: parent.height
@@ -28,16 +28,13 @@ Item {
 
             color: "#ffffff"
             text: speedBackend.value
-            anchors.left: parent.left
             // text: "100"
-            anchors.right: parent.right
-            anchors.leftMargin: 737
-            anchors.rightMargin: 585
             font.pixelSize: 400
-            horizontalAlignment: Text.AlignLeft
+            horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             renderTypeQuality: Text.VeryHighRenderTypeQuality
-            scale: 1.2
+            scale: 1
             font.styleName: "Bold"
             font.family: "SF Pro"
 
@@ -48,14 +45,36 @@ Item {
                 function onValueChanged() {
                     let speed = speedBackend.value
 
-                    if (speed >= 0 && speed < 10) {
-                        speedText.anchors.leftMargin = 1236
-                    } else if (speed >= 10 && speed < 100) {
-                        speedText.anchors.leftMargin = 1000
-                    } else if (speed >= 100 && speed < 200) {
-                        speedText.anchors.leftMargin = 780
-                    } else {
-                        speedText.anchors.leftMargin = 730
+                    switch (speed % 10) {
+                    case 1:
+                        speedText.anchors.horizontalCenterOffset = -38.5
+                        break
+                    case 2:
+                        speedText.anchors.horizontalCenterOffset = -11.2
+                        break
+                    case 3:
+                        speedText.anchors.horizontalCenterOffset = -5.4
+                        break
+                    case 4:
+                        speedText.anchors.horizontalCenterOffset = -1.4
+                        break
+                    case 5:
+                        speedText.anchors.horizontalCenterOffset = -6.5
+                        break
+                    case 6:
+                        speedText.anchors.horizontalCenterOffset = -0.4
+                        break
+                    case 7:
+                        speedText.anchors.horizontalCenterOffset = -20.4
+                        break
+                    case 8:
+                        speedText.anchors.horizontalCenterOffset = -1.1
+                        break
+                    case 9:
+                        speedText.anchors.horizontalCenterOffset = -0.4
+                        break
+                    default:
+                        speedText.anchors.horizontalCenterOffset = 0
                     }
                 }
             }

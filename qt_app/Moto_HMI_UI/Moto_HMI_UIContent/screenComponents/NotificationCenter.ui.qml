@@ -94,11 +94,10 @@ Rectangle {
                         swipeView.moveItem(i, 2)
                         root.state = "highlight"
                         highlightAnimation.start()
+                        console.log("Notification updated")
                         return
                     }
                 }
-
-                // notification initialisation
                 instance = notification.createObject(swipeView, {
                                                          "notificationCode": code,
                                                          "notificationText": testcode.errorToText(
@@ -106,6 +105,11 @@ Rectangle {
                                                      })
                 swipeView.insertItem(2, instance)
                 swipeView.currentIndex = 2
+                console.log("Notification created")
+                console.log(swipeView.count)
+                console.log(swipeView.currentIndex)
+
+                // notification initialisation
                 root.state = "highlight"
                 highlightAnimation.start()
             }
@@ -117,9 +121,10 @@ Rectangle {
                 for (var i = 0; i < swipeView.count; i++) {
                     if (swipeView.itemAt(i).notificationCode === code) {
                         if (i === swipeView.currentIndex) {
-                            swipeView.currentIndex++
+                            swipeView.currentIndex = 0
                         }
                         swipeView.itemAt(i).destroy()
+                        console.log("Notification deleted")
                         return
                     }
                 }

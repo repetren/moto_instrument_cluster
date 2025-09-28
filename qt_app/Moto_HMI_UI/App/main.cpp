@@ -72,66 +72,57 @@ int main(int argc, char *argv[])
     QByteArray payload("A36E");
     frame.setPayload(payload);
 
-    QObject::connect(device, &QCanBusDevice::framesReceived, [device, &bridge]() {
+    QObject::connect(device, &QCanBusDevice::framesReceived, [device, &bridge, &notificationHandler]() {
 
         while (device->framesAvailable()) {
             const QCanBusFrame frame = device->readFrame();
-            qDebug() << "ID:" << Qt::hex << frame.frameId()
-                     << "Payload:" << frame.payload().toHex();
+            // qDebug() << "ID:" << Qt::hex << frame.frameId()
+            //          << "Payload:" << frame.payload().toHex();
             QByteArray data = frame.payload();
+
+            if (frame.frameId() == 0x125) {
+                qDebug() << frame.payload().toHex();
+            }
 
             switch (frame.frameId()) {
             case 0x100: {
-                if (bridge.gearBox.value() != static_cast<uint8_t>(data[0])) {
-                    bridge.gearBox.setValue(static_cast<uint8_t>(data[0]));
-                }
-
-                uint16_t speed = static_cast<uint16_t>(data[1]) << 8 | data[2];
-                qDebug() << speed;
-                if (bridge.speedBackend.value() != speed) {
-                    bridge.speedBackend.setValue(speed);
-                }
-
+                bridge.gearBox.setValue(static_cast<uint8_t>(data[0]));
+                bridge.speedBackend.setValue(static_cast<uint16_t>(data[1]) << 8 | data[2]);
                 bridge.rpmBackend.setValue(static_cast<uint16_t>(data[3]) << 8 | data[4]);
-
-                uint16_t engine_temp = static_cast<uint16_t>(data[5]);
-                if (bridge.engineTemp.value() != engine_temp) {
-                    bridge.engineTemp.setValue(engine_temp);
-                }
+                bridge.engineTemp.setValue(static_cast<uint8_t>(data[5]));
+                bridge.coolantTemp.setValue(static_cast<uint8_t>(data[6]));
             }
                 break;
 
             case 0x110: {
-                bool turn_left = data[0] >> 7 & 0b1;
-                if (bridge.turnLeft.flag() != turn_left) {
-                    bridge.turnLeft.setFlag(turn_left);
-                }
-
-                bool turn_right = data[0] >> 6 & 0b01;
-                if (bridge.turnRight.flag() != turn_right) {
-                    bridge.turnRight.setFlag(turn_right);
-                }
-
-                uint8_t light_mode = data[0] >> 4 & 0b0011;
-                bridge.beamMode.setValue(light_mode);
+                bridge.turnRight.setFlag(data[0] >> 6 & 0b01);
+                bridge.turnLeft.setFlag(data[0] >> 7 & 0b1);
+                bridge.beamMode.setValue(data[0] >> 4 & 0b0011);
             }
                 break;
 
 
             case 0x120: {
-                uint16_t fuel_level = static_cast<uint16_t>(data[0] << 8 | data[1]);
-                if (bridge.fuelLevel.value() != fuel_level) {
-                    bridge.fuelLevel.setValue(fuel_level);
+                bridge.fuelLevel.setValue(static_cast<uint16_t>(data[0] << 8 | data[1]));
+                bridge.litersPerKm.setValue(static_cast<uint16_t>(data[2]));
+                bridge.fuelRange.setValue(static_cast<uint16_t>(data[3] << 8 | data[4]));
+                bridge.lowFuelLevel.setFlag(static_cast<uint8_t>(data[5]));
+
+            }
+                break;
+
+            case 0x121: {
+                bridge.odoBackend.setValue(static_cast<uint16_t>(data[0] << 24 | data[1] << 16 | data[2] << 8 | data[3]));
+                bridge.tripABackend.setValue(static_cast<uint16_t>(data[4] << 8 | data[5]));
+            }
+                break;
+
+            case 0x130: {
+                if (data[2] == 1) {
+                    notificationHandler.newNotification(data[0] * 100 + data[1]);
                 }
-
-                if (bridge.litersPerKm.value() != static_cast<uint16_t>(data[2])) {
-                    bridge.litersPerKm.setValue(static_cast<uint16_t>(data[2]));
-                }
-
-                uint16_t fuel_range = static_cast<uint16_t>(data[3] << 8 | data[4]);
-
-                if (bridge.fuelRange.value() != fuel_range) {
-                    bridge.fuelRange.setValue(fuel_range);
+                else if (data[2] == 0) {
+                    notificationHandler.removeNotification(data[0] * 100 + data[1]);
                 }
             }
                 break;

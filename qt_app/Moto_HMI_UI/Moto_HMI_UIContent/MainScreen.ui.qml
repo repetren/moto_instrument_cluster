@@ -81,12 +81,12 @@ Rectangle {
 
     Text {
         id: kmTitle
-        x: 1224
         y: 120
         color: "#4d4d4d"
         text: qsTr("km/h")
         font.pixelSize: 30
         horizontalAlignment: Text.AlignHCenter
+        anchors.horizontalCenter: parent.horizontalCenter
         font.styleName: "Light"
         font.family: "SF Pro"
     }

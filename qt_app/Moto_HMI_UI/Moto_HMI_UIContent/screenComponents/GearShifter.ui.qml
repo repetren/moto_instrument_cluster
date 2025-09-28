@@ -35,6 +35,7 @@ Item {
         Connections {
             target: gearBox
             function onValueChanged() {
+                timelineAnimation.stop()
                 timelineAnimation.start()
             }
         }
@@ -80,13 +81,13 @@ Item {
             Keyframe {
                 value: 0.8
                 easing.bezierCurve: [0.55, 0.055, 0.675, 0.19, 1, 1]
-                frame: 97
+                frame: 51
             }
 
             Keyframe {
                 value: 1
                 easing.bezierCurve: [0.55, 0.055, 0.675, 0.19, 1, 1]
-                frame: 200
+                frame: 105
             }
         }
     }
