@@ -17,10 +17,45 @@ Rectangle {
     width: Constants.width
     height: Constants.height
     color: "#000000"
+    state: "drive"
 
-    RpmScale {
-        id: backRPM_v001
+    Loader {
+        id: drive_loader
         anchors.fill: parent
+
+        RpmScale {
+            id: backRPM_v001
+            anchors.fill: parent
+        }
+
+        SpeedValue {
+            id: speedValue
+            anchors.fill: parent
+        }
+
+        Text {
+            id: kmTitle
+            x: 748
+            y: 120
+            color: "#4d4d4d"
+            text: qsTr("km/h")
+            font.pixelSize: 30
+            horizontalAlignment: Text.AlignHCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.styleName: "Light"
+            font.family: "SF Pro"
+        }
+    }
+
+    Loader {
+        id: bike_loader
+        visible: false
+        anchors.fill: parent
+        active: false
+
+        BikeView {
+            id: bikeView
+        }
     }
 
     Tray {
@@ -74,24 +109,62 @@ Rectangle {
         id: lightsIcons
     }
 
-    SpeedValue {
-        id: speedValue
-        anchors.fill: parent
-    }
-
-    Text {
-        id: kmTitle
-        y: 120
-        color: "#4d4d4d"
-        text: qsTr("km/h")
-        font.pixelSize: 30
-        horizontalAlignment: Text.AlignHCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.styleName: "Light"
-        font.family: "SF Pro"
-    }
-
     NotificationCenter {
         id: notificationCenter
+
+        Button {
+            id: button
+            x: 1308
+            y: 373
+            width: 167
+            height: 166
+            text: qsTr("Change state")
+            wheelEnabled: false
+            flat: false
+            checkable: true
+
+            Connections {
+                target: button
+                function onCheckedChanged() {
+                    if (button.checked) {
+                        rootRectangle.state = "bike"
+                    } else {
+                        rootRectangle.state = "drive"
+                    }
+                }
+            }
+        }
     }
+
+    states: [
+        State {
+            name: "drive"
+
+            PropertyChanges {
+                target: drive_loader
+                active: true
+            }
+
+            PropertyChanges {
+                target: bike_loader
+                visible: false
+                active: false
+            }
+        },
+        State {
+            name: "bike"
+
+            PropertyChanges {
+                target: drive_loader
+                visible: false
+                active: false
+            }
+
+            PropertyChanges {
+                target: bike_loader
+                visible: true
+                active: true
+            }
+        }
+    ]
 }
