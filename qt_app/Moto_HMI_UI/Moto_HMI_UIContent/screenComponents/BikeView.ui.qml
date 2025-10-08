@@ -10,6 +10,7 @@ import QtQuick
 import QtQuick.Controls
 import Moto_HMI_UI
 import QtQuick3D 6.8
+import Generated.QtQuick3D.Bike_uv_from_substance_v002
 
 Item {
     id: root
@@ -19,9 +20,10 @@ Item {
     Item {
         id: __materialLibrary__
 
-        PrincipledMaterial {
-            id: principledMaterial
-            objectName: "New Material"
+        Texture {
+            id: basicLights1_4K
+            source: "../images/BasicLights1_4K.hdr"
+            objectName: "Basic Lights1 4K"
         }
     }
 
@@ -29,6 +31,7 @@ Item {
         id: dragArea
         visible: false
         anchors.fill: parent
+        anchors.bottomMargin: 154
     }
 
     DragHandler {
@@ -66,49 +69,70 @@ Item {
     View3D {
         id: view3D
         anchors.fill: parent
+        importScene: scene
         environment: sceneEnvironment
         SceneEnvironment {
             id: sceneEnvironment
+            lightProbe: basicLights1_4K
+            tonemapMode: SceneEnvironment.TonemapModeAces
+            probeHorizon: 0
+            probeExposure: 10
             antialiasingQuality: SceneEnvironment.High
             antialiasingMode: SceneEnvironment.MSAA
         }
 
         Node {
             id: scene
-            DirectionalLight {
-                id: directionalLight
+
+            Bike_uv_from_substance_v002 {
+                id: bike_uv_from_substance_v002
             }
 
             Model {
                 id: pan
+                opacity: 0
                 source: "#Rectangle"
-                materials: principledMaterial
+                eulerRotation.z: -0.00002
+                eulerRotation.y: -90
+                eulerRotation.x: -0.00002
 
                 Model {
                     id: tilt
+                    y: -51
+                    opacity: 0
                     source: "#Rectangle"
-                    materials: principledMaterial
 
                     PerspectiveCamera {
                         id: sceneCamera
-                        z: 350
+                        x: -0
+                        y: -0
+                        fieldOfView: 20
+                        z: 763.26178
                     }
                 }
             }
 
             Model {
-                id: cubeModel
-                source: "#Cube"
-                materials: principledMaterial
+                id: plane
+                source: "#Rectangle"
             }
         }
+    }
+
+    Image {
+        id: info_line
+        x: 223
+        y: 497
+        source: "../images/info_line.svg"
+        fillMode: Image.PreserveAspectFit
     }
 }
 
 /*##^##
 Designer {
     D{i:0;matPrevEnvDoc:"SkyBox";matPrevEnvValueDoc:"preview_studio";matPrevModelDoc:"#Sphere"}
-D{i:8;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+D{i:6;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:8;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+D{i:14}
 }
 ##^##*/
 

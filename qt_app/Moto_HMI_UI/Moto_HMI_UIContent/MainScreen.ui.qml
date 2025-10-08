@@ -53,6 +53,12 @@ Rectangle {
         anchors.fill: parent
         active: false
 
+        Image {
+            id: bike_bg
+            source: "images/bike_bg.png"
+            fillMode: Image.PreserveAspectFit
+        }
+
         BikeView {
             id: bikeView
         }
@@ -109,32 +115,18 @@ Rectangle {
         id: lightsIcons
     }
 
+    ButtonMode {
+        id: buttonMode
+        x: 1354
+        y: 491
+        width: 164
+        height: 68
+    }
+
     NotificationCenter {
         id: notificationCenter
-
-        Button {
-            id: button
-            x: 1308
-            y: 373
-            width: 167
-            height: 166
-            text: qsTr("Change state")
-            wheelEnabled: false
-            flat: false
-            checkable: true
-
-            Connections {
-                target: button
-                function onCheckedChanged() {
-                    if (button.checked) {
-                        rootRectangle.state = "bike"
-                    } else {
-                        rootRectangle.state = "drive"
-                    }
-                }
-            }
-        }
     }
+
 
     states: [
         State {
@@ -147,8 +139,20 @@ Rectangle {
 
             PropertyChanges {
                 target: bike_loader
+                opacity: 1
                 visible: false
                 active: false
+            }
+
+            PropertyChanges {
+                target: bikeView
+                opacity: 0
+                scale: 0.8
+            }
+
+            PropertyChanges {
+                target: bike_bg
+                opacity: 0
             }
         },
         State {
@@ -156,7 +160,9 @@ Rectangle {
 
             PropertyChanges {
                 target: drive_loader
+                opacity: 0
                 visible: false
+                scale: 0.8
                 active: false
             }
 
@@ -167,4 +173,97 @@ Rectangle {
             }
         }
     ]
+    transitions: [
+        Transition {
+            id: transition
+            ParallelAnimation {
+                SequentialAnimation {
+                    PauseAnimation {
+                        duration: 0
+                    }
+
+                    PropertyAnimation {
+                        target: bikeView
+                        property: "opacity"
+                        duration: 540
+                    }
+                }
+
+                SequentialAnimation {
+                    PauseAnimation {
+                        duration: 0
+                    }
+
+                    PropertyAnimation {
+                        target: bikeView
+                        property: "scale"
+                        duration: 125
+                    }
+                }
+            }
+
+            ParallelAnimation {
+                SequentialAnimation {
+                    PauseAnimation {
+                        duration: 0
+                    }
+
+                    PropertyAnimation {
+                        target: bike_loader
+                        property: "opacity"
+                        duration: 527
+                    }
+                }
+            }
+
+            ParallelAnimation {
+                SequentialAnimation {
+                    PauseAnimation {
+                        duration: 0
+                    }
+
+                    PropertyAnimation {
+                        target: drive_loader
+                        property: "opacity"
+                        duration: 343
+                    }
+                }
+
+                SequentialAnimation {
+                    PauseAnimation {
+                        duration: 0
+                    }
+
+                    PropertyAnimation {
+                        target: drive_loader
+                        property: "scale"
+                        duration: 175
+                    }
+                }
+            }
+
+            ParallelAnimation {
+                SequentialAnimation {
+                    PauseAnimation {
+                        duration: 0
+                    }
+
+                    PropertyAnimation {
+                        target: bike_bg
+                        property: "opacity"
+                        duration: 334
+                    }
+                }
+            }
+            to: "*"
+            from: "*"
+        }
+    ]
 }
+
+/*##^##
+Designer {
+    D{i:0}D{i:1}D{i:5}D{i:6}D{i:7}D{i:27;transitionDuration:2000}
+}
+##^##*/
+

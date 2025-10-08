@@ -36,6 +36,7 @@ public:
         context->setContextProperty("turnRight", &turnRight);
         context->setContextProperty("drlState", &drlState);
         context->setContextProperty("beamMode", &beamMode);
+        context->setContextProperty("turnBlink", &turnBlink);
     }
 
     // Telemetry objects
@@ -57,6 +58,7 @@ public:
     FlagToQML turnLeft;
     FlagToQML turnRight;
     FlagToQML drlState;
+    FlagToQML turnBlink;
     ValueToQML beamMode;
 
 

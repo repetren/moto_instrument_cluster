@@ -134,7 +134,13 @@ int main(int argc, char *argv[])
         }
     });
 
+    QObject::connect(timer, &QTimer::timeout, [&]() {
+        bool blinkNow = bridge.turnBlink.flag();
+        bridge.turnBlink.setFlag(!blinkNow);
+        qDebug() << bridge.turnBlink.flag();
+    });
 
+    timer->start(400);
 
     // QObject::connect(timer, &QTimer::timeout, [&]() {
     //     fakeValue = fakeValue - 10;
@@ -230,7 +236,7 @@ int main(int argc, char *argv[])
 
     // timer->start(100);
 
-    // // TEST IMTPUT TIMER END BLOCK
+    // TEST IMTPUT TIMER END BLOCK
 
 
     return app.exec();

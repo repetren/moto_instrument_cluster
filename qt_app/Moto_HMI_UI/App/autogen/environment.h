@@ -9,6 +9,7 @@
 #include "qqmlextensionplugin.h"
 
 Q_IMPORT_QML_PLUGIN(Moto_HMI_UIContentPlugin)
+Q_IMPORT_QML_PLUGIN(Generated_QtQuick3D_Bike_uv_from_substance_v002Plugin)
 Q_IMPORT_QML_PLUGIN(Moto_HMI_UIPlugin)
 
 const char mainQmlFile[] = "qrc:/qt/qml/Moto_HMI_UIContent/App.qml";
