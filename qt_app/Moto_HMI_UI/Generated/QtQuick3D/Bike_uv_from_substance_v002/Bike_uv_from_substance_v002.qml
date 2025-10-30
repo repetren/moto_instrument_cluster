@@ -3,6 +3,10 @@ import QtQuick3D
 
 Node {
     id: node
+    property alias turn_left_onVisible: turn_left_on.visible
+    property alias turn_right_onVisible: turn_right_on.visible
+    property alias turn_rightVisible: turn_right.visible
+    property alias turn_leftVisible: turn_left.visible
 
     // Resources
 
@@ -295,12 +299,16 @@ Node {
             objectName: "turn_left"
             x: -7.629395440744702e-06
             y: 28.871065139770508
+            opacity: 1
+            visible: true
             z: 60.63840866088867
             rotation: Qt.quaternion(0.707107, -0.707107, 0, 0)
             scale.x: 0.1
             scale.y: 0.1
             scale.z: 0.1
             source: "meshes/turn_left_mesh.mesh"
+            receivesShadows: true
+            castsShadows: true
             materials: [
                 main
             ]
@@ -316,9 +324,46 @@ Node {
             scale.y: 0.1
             scale.z: 0.1
             source: "meshes/turn_right_mesh.mesh"
+            receivesShadows: true
+            castsShadows: true
             materials: [
                 main
             ]
+        }
+
+        Model {
+            id: turn_left_on
+            x: -0
+            y: 28.871
+            visible: true
+            source: "meshes/turn_left_mesh.mesh"
+            castsShadows: false
+            castsReflections: false
+            receivesShadows: false
+            z: 60.63841
+            scale.z: 0.1
+            scale.y: 0.1
+            scale.x: 0.1
+            rotation: Qt.quaternion(0.707107, -0.707107, 0, 0)
+            objectName: "turn_left"
+            materials: emssion_material
+        }
+
+        Model {
+            id: turn_right_on
+            x: -0
+            y: 1.544
+            source: "meshes/turn_right_mesh.mesh"
+            castsReflections: false
+            receivesShadows: false
+            castsShadows: false
+            z: -28.24544
+            scale.z: 0.1
+            scale.y: 0.1
+            scale.x: 0.1
+            rotation: Qt.quaternion(0.707107, -0.707107, 0, 0)
+            objectName: "turn_right"
+            materials: emssion_material
         }
     }
 
@@ -347,35 +392,35 @@ Node {
         }
     }
 
-    Connections {
-        target: turnLeft
-        onFlagChanged: {
-            if (turnLeft.flag) {
-                if (turnBlink.flag === true) {
-                    turn_left.materials = [ emssion_material ]
-                } else {
-                    turn_left.materials = [ main ]
-                }
-            } else {
-                turn_left.materials = [ main ]
-            }
-        }
-    }
+    // Connections {
+    //     target: turnLeft
+    //     onFlagChanged: {
+    //         if (turnLeft.flag) {
+    //             if (turnBlink.flag === true) {
+    //                 turn_left.materials = [ emssion_material ]
+    //             } else {
+    //                 turn_left.materials = [ main ]
+    //             }
+    //         } else {
+    //             turn_left.materials = [ main ]
+    //         }
+    //     }
+    // }
 
-    Connections {
-        target: turnRight
-        onFlagChanged: {
-            if (turnRight.flag) {
-                if (turnBlink.flag === true) {
-                    turn_right.materials = [ emssion_material ]
-                } else {
-                    turn_right.materials = [ main ]
-                }
-            } else {
-                turn_right.materials = [ main ]
-            }
-        }
-    }
+    // Connections {
+    //     target: turnRight
+    //     onFlagChanged: {
+    //         if (turnRight.flag) {
+    //             if (turnBlink.flag === true) {
+    //                 turn_right.materials = [ emssion_material ]
+    //             } else {
+    //                 turn_right.materials = [ main ]
+    //             }
+    //         } else {
+    //             turn_right.materials = [ main ]
+    //         }
+    //     }
+    // }
 
     Node {
         id: __materialLibrary__
@@ -466,6 +511,6 @@ Node {
 
 /*##^##
 Designer {
-    D{i:0;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+    D{i:0;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;matPrevEnvDoc:"SkyBox";matPrevEnvValueDoc:"preview_studio";matPrevModelDoc:"#Sphere"}
 }
 ##^##*/

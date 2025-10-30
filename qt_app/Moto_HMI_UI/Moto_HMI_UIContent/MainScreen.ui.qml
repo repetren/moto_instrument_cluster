@@ -117,16 +117,16 @@ Rectangle {
 
     ButtonMode {
         id: buttonMode
-        x: 1354
-        y: 491
-        width: 164
-        height: 68
+        x: 1364
+        y: 507
+        width: 137
+        height: 64
+        visible: speedBackend.value >= 10 ? false : true
     }
 
     NotificationCenter {
         id: notificationCenter
     }
-
 
     states: [
         State {
@@ -263,7 +263,7 @@ Rectangle {
 
 /*##^##
 Designer {
-    D{i:0}D{i:1}D{i:5}D{i:6}D{i:7}D{i:27;transitionDuration:2000}
+    D{i:0}D{i:27;transitionDuration:2000}
 }
 ##^##*/
 

@@ -28,7 +28,7 @@ Item {
             color: "#ffffff"
             text: qsTr("Info")
             anchors.fill: parent
-            font.pixelSize: 40
+            font.pixelSize: 35
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }

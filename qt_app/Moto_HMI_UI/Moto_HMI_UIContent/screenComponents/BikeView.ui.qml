@@ -11,6 +11,7 @@ import QtQuick.Controls
 import Moto_HMI_UI
 import QtQuick3D 6.8
 import Generated.QtQuick3D.Bike_uv_from_substance_v002
+import QtQuick.Timeline 1.0
 
 Item {
     id: root
@@ -66,6 +67,33 @@ Item {
         }
     }
 
+    Connections {
+        target: turnLeft
+        onFlagChanged: {
+            if (turnLeft.flag) {
+                animationTurnLeft.start()
+                console.log("Left start")
+            } else {
+                animationTurnLeft.restart()
+                animationTurnLeft.stop()
+                console.log("Left end")
+            }
+        }
+    }
+
+    Connections {
+        target: turnRight
+        onFlagChanged: {
+            if (turnRight.flag) {
+                animationTurnRight.start()
+                console.log("right start")
+            } else {
+                animationTurnRight.restart()
+                animationTurnRight.stop()
+                console.log("right end")
+            }
+        }
+    }
     View3D {
         id: view3D
         anchors.fill: parent
@@ -85,7 +113,11 @@ Item {
             id: scene
 
             Bike_uv_from_substance_v002 {
-                id: bike_uv_from_substance_v002
+                id: bike3Dmodel
+                turn_leftVisible: true
+                turn_rightVisible: true
+                turn_right_onVisible: false
+                turn_left_onVisible: false
             }
 
             Model {
@@ -121,18 +153,151 @@ Item {
 
     Image {
         id: info_line
-        x: 223
+        x: 276
         y: 497
         source: "../images/info_line.svg"
         fillMode: Image.PreserveAspectFit
+    }
+
+    Timeline {
+        id: timelineTurnLeft
+        animations: [
+            TimelineAnimation {
+                id: animationTurnLeft
+                running: false
+                loops: -1
+                duration: 2000
+                to: 2000
+                from: 0
+            }
+        ]
+        startFrame: 0
+        endFrame: 2000
+        enabled: true
+
+        KeyframeGroup {
+            id: turn_leftVisible_animation
+            target: bike3Dmodel
+            property: "turn_leftVisible"
+            Keyframe {
+                value: true
+                frame: 0
+            }
+
+            Keyframe {
+                value: false
+                frame: 46
+            }
+
+            Keyframe {
+                value: true
+                frame: 1000
+            }
+
+            Keyframe {
+                value: true
+                frame: 2000
+            }
+        }
+
+        KeyframeGroup {
+            id: turn_left_onVisible_animation
+            target: bike3Dmodel
+            property: "turn_left_onVisible"
+            Keyframe {
+                value: false
+                frame: 0
+            }
+
+            Keyframe {
+                value: true
+                frame: 46
+            }
+
+            Keyframe {
+                value: false
+                frame: 1000
+            }
+
+            Keyframe {
+                value: false
+                frame: 2000
+            }
+        }
+    }
+
+    Timeline {
+        id: timelineTurnRight
+        animations: [
+            TimelineAnimation {
+                id: animationTurnRight
+                running: false
+                loops: -1
+                duration: 2000
+                to: 2000
+                from: 0
+            }
+        ]
+        startFrame: 0
+        endFrame: 2000
+        enabled: true
+
+        KeyframeGroup {
+            id: turn_rightVisible_animation
+            target: bike3Dmodel
+            property: "turn_rightVisible"
+            Keyframe {
+                value: true
+                frame: 0
+            }
+
+            Keyframe {
+                value: false
+                frame: 46
+            }
+
+            Keyframe {
+                value: true
+                frame: 1000
+            }
+
+            Keyframe {
+                value: true
+                frame: 2000
+            }
+        }
+
+        KeyframeGroup {
+            id: turn_right_onVisible_animation
+            target: bike3Dmodel
+            property: "turn_right_onVisible"
+            Keyframe {
+                value: false
+                frame: 0
+            }
+
+            Keyframe {
+                value: true
+                frame: 46
+            }
+
+            Keyframe {
+                value: false
+                frame: 1000
+            }
+
+            Keyframe {
+                value: false
+                frame: 2000
+            }
+        }
     }
 }
 
 /*##^##
 Designer {
     D{i:0;matPrevEnvDoc:"SkyBox";matPrevEnvValueDoc:"preview_studio";matPrevModelDoc:"#Sphere"}
-D{i:6;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:8;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
-D{i:14}
+D{i:10;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:11}
 }
 ##^##*/
 
