@@ -94,7 +94,6 @@ Rectangle {
                         swipeView.moveItem(i, 2)
                         root.state = "highlight"
                         highlightAnimation.start()
-                        console.log("Notification updated")
                         return
                     }
                 }
@@ -105,9 +104,6 @@ Rectangle {
                                                      })
                 swipeView.insertItem(2, instance)
                 swipeView.currentIndex = 2
-                console.log("Notification created")
-                console.log(swipeView.count)
-                console.log(swipeView.currentIndex)
 
                 // notification initialisation
                 root.state = "highlight"
@@ -124,7 +120,6 @@ Rectangle {
                             swipeView.currentIndex = 0
                         }
                         swipeView.itemAt(i).destroy()
-                        console.log("Notification deleted")
                         return
                     }
                 }

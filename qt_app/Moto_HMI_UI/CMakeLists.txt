@@ -29,6 +29,9 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
     App/valuetoqml.h App/valuetoqml.cpp
     App/bridgeregistry.h
     App/flagtoqml.h App/flagtoqml.cpp
+    App/can_id_utils.h
+    App/can_id_utils.cpp
+
 )
 qt_add_resources(${CMAKE_PROJECT_NAME} "configuration"
     PREFIX "/"

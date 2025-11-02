@@ -35,11 +35,5 @@ Rectangle {
             }
         }
 
-        // Connections {
-        //     target: fuelBackend
-        //     onFuelLevelChanged: {
-        //         rmpLineAnimation.gotoAndStop(fuelBackend.fuelLevel)
-        //     }
-        // }
     }
 }

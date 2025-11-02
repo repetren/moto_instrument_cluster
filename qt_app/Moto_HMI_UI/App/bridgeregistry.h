@@ -4,7 +4,7 @@
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
 
-#include "App/flagtoqml.h"
+#include "flagtoqml.h"
 #include "valuetoqml.h"
 
 class BridgeRegistry {

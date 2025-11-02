@@ -2,12 +2,12 @@
 ### Do not change
 
 add_subdirectory(Moto_HMI_UIContent)
-add_subdirectory(Generated)
 add_subdirectory(Moto_HMI_UI)
+add_subdirectory(Generated)
 add_subdirectory(App)
 add_subdirectory(Dependencies)
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
     Moto_HMI_UIContentplugin
-    Generated_QtQuick3D_Bike_uv_from_substance_v002plugin
-    Moto_HMI_UIplugin)
+    Moto_HMI_UIplugin
+    Generated_QtQuick3D_Bike_uv_from_substance_v002plugin)

@@ -28,7 +28,6 @@ Item {
 
             color: "#ffffff"
             text: speedBackend.value
-            // text: "100"
             font.pixelSize: 400
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
