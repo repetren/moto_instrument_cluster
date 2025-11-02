@@ -1,3 +1,11 @@
+<p align="left">
+  <img src="https://img.shields.io/badge/Qt-6.9.1-brightgreen"/>
+  <img src="https://img.shields.io/badge/Boot2Qt-RPi5-blue"/>
+  <img src="https://img.shields.io/badge/SocketCAN-MCP2515-9cf"/>
+  <img src="https://img.shields.io/badge/C++-17-informational"/>
+  <img src="https://img.shields.io/badge/QML-UI-orange"/>
+</p>
+
 # Raspberry Pi 5 Motorcycle Instrument Cluster — Qt, CAN, Real-Time 3D
 
 Digital motorcycle dashboard for Raspberry Pi 5 with a Qt UI, CAN-bus integration, and real-time 3D graphics.
