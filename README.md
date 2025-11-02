@@ -1,1 +1,1 @@
-# Raspberry Pi 5 & Qt based motorcycle instrument cluster
+# Raspberry Pi 5 & Qt-based Motorcycle instrument cluster
