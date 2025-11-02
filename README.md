@@ -2,6 +2,8 @@
 
 Digital motorcycle dashboard for Raspberry Pi 5 with a Qt UI, CAN-bus integration, and real-time 3D graphics.
 
+This project is a personal initiative to explore embedded UI design, CAN integration, and real-time data processing for motorcycles.
+
 Fully tested and integrated with a [CAN control panel](https://github.com/repetren/stm32_hmi_control_pannel) that uses physical inputs to generate interactive actions on the dashboard. 
 
 ![Image](https://github.com/user-attachments/assets/33ac92e3-4b31-4eb6-914c-c40214babb54)
@@ -67,7 +69,8 @@ Improves GPU performance on Waveshare displays and allows reading local JSON fil
 - Real-time performance, low latency
 - Modular & configurable for different CAN frame maps
 - Notification handling. JSON-based error code mapping
-- Physical input integration via [CAN control panel](https://github.com/repetren/stm32_hmi_control_pannel).
+- Physical input integration via [CAN control panel](https://github.com/repetren/stm32_hmi_control_pannel)
+- 3D printerd case.
 
 ##### Decoding CAN signals:
 - Telemetry (RPM, Speed, Gears)
@@ -77,6 +80,29 @@ Improves GPU performance on Waveshare displays and allows reading local JSON fil
 
 ## CAN Frame Map
 ![Image](https://github.com/user-attachments/assets/5da04f03-c850-4726-8469-995679e1c428)
+
+## Architecture overview
+<img width="1285" height="480" alt="Image" src="https://github.com/user-attachments/assets/d296db70-7bc3-4552-9b8c-1d664f7f22c9" />
+
+## Skills & Technologies demonstrated
+- Qt/QML UI architecture (3D animations, multi-screen, touch interactions)
+- C++ backend for real-time data processing
+- Embedded Linux deployment (Boot2Qt)
+- SocketCAN integration (MCP2515)
+- Basic CAN diagnostics and STM32 based contol pannel
+- Cross-compilation and remote debugging via Qt Creator
+- Hardware assembling: RPi 5, CAN HAT, Waveshare DSI display
+- Custom CAD-modeled and 3D printed housing
+
+## My Role
+Personal project fully developed by me: from UI and 3D design, hardware setup and system architecture, to C++ backend implementation and working prototype.
+
+## Future steps
+- Clean Yocto build for fast boot
+- Replacing RPi 5 to RPi 5 CM
+- Adding passive cooling
+- Day and night UI modes
+
 
 
 
