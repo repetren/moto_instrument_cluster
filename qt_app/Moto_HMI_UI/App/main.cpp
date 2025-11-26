@@ -4,7 +4,6 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-// #include <QThread>
 #include <QDebug>
 #include <QTimer>
 #include <QtSerialBus/QCanBus>
